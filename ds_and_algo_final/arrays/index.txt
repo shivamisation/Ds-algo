@@ -1,0 +1,58 @@
+[Reverse the array without using any extra space ]-------------------------------------------------2
+[Calculate the maximum and minimum of an array using divide and conquer]---------------------------2
+[Finding the Kth maximum number in an array using priority queue]----------------------------------2 
+[Finding the kth minimum number in an array using priority queue]----------------------------------2
+[Sorting an array of 0s 1s and 2s using dutch national flag algo]----------------------------------2
+[Segregate negative and positive numbers on one side]----------------------------------------------2
+[Merge two sorted arrays]--------------------------------------------------------------------------1
+[Cycly rotate the array sometimes]-----------------------------------------------------------------1
+[Kadane's algo with begenning and closing indexes]-------------------------------------------------1
+[Minimize the difference between the maximum and minimum elments of the array]---------------------1
+[Mininum number of jumps to reach the end of an array(recursive)]----------------------------------1
+[Mininum number of jumps to reach the end of an array(recursive with memo , top down)]-------------1
+[Mininum number of jumps to reach the end of an array(bottom up)]----------------------------------1
+[Finding duplicates (where we can use the array smartly and use it as a set)]----------------------1
+[Finding duplicate using Floyd cycle]--------------------------------------------------------------1
+[Merging two sorted arrays without extra space]----------------------------------------------------1
+[Merging intervals]--------------------------------------------------------------------------------1
+[Next Permutation]---------------------------------------------------------------------------------1
+[Count Inversions]---------------------------------------------------------------------------------1
+[Maximise profit in buying and selling stock]------------------------------------------------------1
+[Numbers of pairs with a given sum]----------------------------------------------------------------1
+[Intersection of two arrays]-----------------------------------------------------------------------1
+[Rearrange array in alternating positive and negative items with O(1) extra space...O(n2)----------1
+[Rearrange array in alternating positive and negative items with O(1) extra space...O(n)-----------1
+[Find subarrays with sum equal to zero]------------------------------------------------------------1
+[Find subarrays with sum equal to a given number (neg nums as well)]-------------------------------1
+[Find subarrays with sum equal to a given number (all positive numbers)]---------------------------1
+[Factorial of a large number]----------------------------------------------------------------------1
+[Max product subarray]-----------------------------------------------------------------------------1
+[Longest consecutive subsequence (O(nlogn) with O(1) space)----------------------------------------1
+[Longest consecutive subsequence (O(n) with O(n) space)--------------------------------------------1
+[Max profit by buying and selling at most k times] ------------------------------------------------1
+[Max profit by buying and selling at most 2 times]-------------------------------------------------1
+[Check wheather an array is a subset of another array (using merging)]-----------------------------1
+[Check wheather an array is a subset of another array (using frequency)]---------------------------1
+[Find triplets that sum to a given value (Two pointer approach)------------------------------------1
+[Find triplets that sum to a given value (Hashing based)-------------------------------------------1
+[Trapping rain water]------------------------------------------------------------------------------1
+[Choclate distribution problem]--------------------------------------------------------------------1
+[Smallest subarray with sum greater than a given value]--------------------------------------------1
+[Three way partitioning of an array around a given range , using dutch national flag algo]---------1
+[Minimum swaps required to make all elements less than k together]---------------------------------1
+[Find the median of two arrays of same size(can be modified better]--------------------------------1
+[Find the median of two arrays of different size]--------------------------------------------------1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
