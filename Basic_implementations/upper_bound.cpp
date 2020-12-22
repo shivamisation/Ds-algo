@@ -35,8 +35,56 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
+//upper bound gives you the index of the largest element which is lesser than or equal to 
+//the target . 
+
+//Lower bound gives you the index of the lowest number which is greater than the desired 
+//target . 
+
+int lower(vector<int> a , int x ){
+	int hi = a.size() - 1 , lo = 0 ;
+	int ans =0 ; 
+	
+	while(lo<=hi){
+		int mid = (lo+hi)/2 ; 
+		debug(hi , lo , mid , a[mid]);
+		if(a[mid] > x) hi = mid-1 ; 
+		else {
+			ans = lo ;
+			lo = mid+1; 
+		}
+	}
+	return ans ; 
+}
+
+int higher(vector<int> a , int x ){
+	int hi = a.size()-1 , lo = 0;
+	int ans =0 ;
+	
+	while(lo<=hi){
+		int mid = (lo+hi)/2 ; 
+		if(a[mid]>x) {
+			ans = mid ; 
+			hi = mid-1 ; 
+		}
+		else lo = mid+1 ; 
+	}
+	
+	return ans ; 
+}
+
 void solve()
 {
+	int n ; cin>>n ; 
+	vector<int> a(n);
+	for(auto &it : a) cin>>it ; 
+	int x; cin>>x ; 
+	
+	cout<<lower(a,x);
+	
+	debug(lower(a, x));
+	//debug(higher(a,x));
+	
 	
 	
 }

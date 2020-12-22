@@ -35,51 +35,40 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-// Printing the spiral traversal of a matrix 
-
-void spiral(vector<vector<int>> a , int i , int j , int m , int n){
-	
-	if(i>=m or j>=n) return ; 
-	
-	for(int p = j ; p<n ; p++) {
-		cout<<a[i][p]<<" " ; 
-	}
-	
-	for(int p = i+1 ; p<m ; p++){
-		cout<<a[p][n-1]<<" " ;
-	}
-	
-	if((m-1)!=i){
-		for(int p = n-2 ; p>=j ; p--){
-			cout<<a[m-1][p]<<" ";
-		}
-	}
-	
-	if((n-1)!=j){
-		for(int p = m-2 ; p>i ; p--){
-			cout<<a[p][j]<<" " ; 
-		}
-	}
-	
-	spiral(a , i+1 , j+1 , m-1 , n-1);
-}
-
-
-
 void solve()
 {
 	
-	int n , m ; cin>>n>>m ; 
-	
-	vector<vector<int>> a(m , vector<int> (n));
-	
-	for(auto &it : a){
-		for(auto &its : it){
-			cin>>its ; 
-		}
+	vector<vector<int>> a;
+	a={ 
+        {1, 2, 1, 4, 8}, 
+        {3, 7, 8, 5, 1}, 
+        {8, 7, 7, 3, 1}, 
+        {8, 1, 2, 7, 9}, 
+    }; 
+    
+    map<int,int> mp;
+    
+    int m = a[0].size();
+    int n = a.size();
+    
+    for(int c=0 ; c<m ; c++){
+		mp[a[0][c]]=1 ;
 	}
 	
-	spiral(a , 0 , 0 , m , n);
+	for(int r=1 ; r<n ; r++ ){
+		for(int c=0 ; c<m ; c++){
+			if(mp[a[r][c]]==r){
+				mp[a[r][c]]++ ; 
+				
+				if(r==n-1){
+					cout<<a[r][c] ;
+					return ; 
+				}
+			}
+			
+		}
+	}
+    
 	
 	
 	
