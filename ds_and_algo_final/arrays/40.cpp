@@ -54,10 +54,7 @@ void solve()
 			cur_sum-=a[start++] ; 
 		}
 	}
-	
 	debug(mn_len);
-	
-	
 }
 
 int main()

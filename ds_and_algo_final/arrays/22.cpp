@@ -35,10 +35,28 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-// See the union of two arrays is simply the merging of two sorted arrays . 
-// and their intersection is the common elements in them which can be found in O(n+m) , 
-// here the question says you to find the common elements between three elments 
-// simply find between two and repeat the step . 
+  //so there are some plenty of ways to find the union and intersection of two arrays 
+  //-> Brute force , initialise an empty answer array , then for every element in the 
+	 //first array see , if that is present in the other one or not, if not then push that 
+	 //element into the answer array , but first you have to copy the first array to the ans
+	 
+	 //for intersection , for every element in the first array see if it is already present
+	 //in the second one , if it is , then push it to the answer 
+	 
+  
+  
+  //-> Sorting ------
+  //sort both the arrays and then search the union and intersection in o(n+m) time
+  
+  
+  //->Sorting and binary searching is one way, you can sort the smaller array and then 
+    //search every element of the larger array in the smaller one . 
+    
+    
+  //->Hashing=------------
+   //use a set to find the union , copy every element of the first array in the set , then 
+   //iterate over the other one and if the element is present in the set then print it ...for intersection
+
 
 void solve()
 {

@@ -55,8 +55,8 @@ void findsums(vector<int> a , vector<triplet> &ans , int sum){
 				temp.second = a[l] ;
 				temp.third = a[r] ; 
 				ans.push_back(temp);
-				debug(i , l ,r);
-				debug(a[i] , a[l] , a[r] , i , l , r); 
+				//debug(i , l ,r);
+				//debug(a[i] , a[l] , a[r] , i , l , r); 
 				break; 
 				
 			}
@@ -68,6 +68,8 @@ void findsums(vector<int> a , vector<triplet> &ans , int sum){
 }
 
 // Time complexity is O(n2) . We are using the two pointer approach ; 
+// This requires O(1) space complexity , whereas the Hashing based solution takes
+//O(n) space . 
 
 
 void solve()

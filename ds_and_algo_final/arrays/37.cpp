@@ -41,7 +41,7 @@ void solve()
 	vector<int> a(n); for(auto &it : a) cin>>it ; 
 	
 	for(int i=0 ; i<n-2 ; i++){
-		set<int> s ;
+		unordered_set<int> s ;
 		int cur_sum = sum - a[i] ; 
 		for(int j = i+1 ; j<n ; j++){
 			if(s.find(cur_sum-a[j])!=s.end()){

@@ -53,13 +53,7 @@ void solve()
 		if(sum==goal){
 			cout<<s<<" "<<i<<"\n" ; 
 		}
-		
-		
-		
-		
-	}
-	
-	
+	}	
 }
 
 int main()

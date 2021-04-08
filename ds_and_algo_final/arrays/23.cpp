@@ -35,6 +35,8 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
+// Maintains the order of appearance 
+
 void rightrotate(vector<int> &a , int bad, int i){
 	int tmp = a[i] ; 
 	for(int j = i ; j>bad ; j--){

@@ -20,7 +20,7 @@
 [Maximise profit in buying and selling stock]------------------------------------------------------1
 [Numbers of pairs with a given sum]----------------------------------------------------------------1
 [Intersection of two arrays]-----------------------------------------------------------------------1
-[Rearrange array in alternating positive and negative items with O(1) extra space...O(n2)----------1
+[Rearrange array in alternating positive and negative items with O(1) extra space O(n2)(important)-1
 [Rearrange array in alternating positive and negative items with O(1) extra space...O(n)-----------1
 [Find subarrays with sum equal to zero]------------------------------------------------------------1
 [Find subarrays with sum equal to a given number (neg nums as well)]-------------------------------1
@@ -42,11 +42,8 @@
 [Minimum swaps required to make all elements less than k together]---------------------------------1
 [Find the median of two arrays of same size(can be modified better]--------------------------------1
 [Find the median of two arrays of different size]--------------------------------------------------1
-
-
-
-
-
+[Longest increasing consecutive subsequence]
+[same as 26 , but with constat space] --- TO BE DONE 
 
 
 

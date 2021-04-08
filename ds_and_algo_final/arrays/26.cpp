@@ -62,9 +62,9 @@ void solve()
 			}
 		}
 		
-		m[sum-sm].push_back(i);
+		m[sum].push_back(i);
 		
-		debug(sum , i);
+		//debug(sum , i);
 	}
 	
 	debug(ans);

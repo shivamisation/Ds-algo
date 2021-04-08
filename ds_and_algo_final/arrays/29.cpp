@@ -37,7 +37,7 @@ void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
 int mx_prod(vector<int> &a){
 	
-	int mx = 1 ;
+	int mx = 1 ; 
 	int mn = 1 ; 
 	
 	int n = a.size() , ans = 0 , flag = 0 ; 
@@ -63,8 +63,8 @@ int mx_prod(vector<int> &a){
 		ans = max(ans , mx);
 	}
 	
-	if(flag==0 && mx==0) return 0 ; 
-	else return mx ; 
+	if(flag==0 && ans==0) return 0 ; 
+	else return ans ; 
 }
 
 void solve()

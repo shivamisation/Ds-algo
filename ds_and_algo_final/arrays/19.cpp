@@ -35,6 +35,9 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
+// if we are allowed to swap only the adjacent elements then we could completely swap
+// the array using the (inversions) number of swaps ///// 
+
 int merge(vector<int> &a , vector<int> &temp , int left , int mid , int right){
 	
 	int i , j , k , inv = 0 ; 

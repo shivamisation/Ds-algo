@@ -34,84 +34,47 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+vector<int> a ;
 
-vector<int> get_vec(vector<int> v , int l , int r){
-	vector<int> temp ; 
-	
-	for(int i = l ; i<=r ; i++) temp.push_back(v[i]);
-	
-	return temp ; 
-}
+int partition(int low , int high){
 
-int median(vector<int> a , int n){
+	int i = low - 1 ; 
+	int pivot = a[high] ;
+	// we cant do this because our implementation of partition is bases on the presense 
+	// of the pivot on the last index .....
 	
-	if(n%2==0){
-		return (a[n/2] + a[n/2 -1])/2 ; 
-	}
-	return a[n/2] ; 
-}
-
-int get_median(vector<int> a , vector<int> b , int n)
-{
-	debug(a , b , n);
-	if(n==1) return(a[0] + b[0])/2 ; 
-	if(n==2) {
-		debug(max(a[0] , b[0]) + min(a[1] , b[1]));
-		return (max(a[0] , b[0]) + min(a[1] , b[1]))/2 ; 
-	} 
-	
-	int m1 = median(a , n);
-	int m2 = median(b , n);
-	
-	if(m1==m2) return m1 ; 
-	
-	if(m1 < m2){
-		if(n%2==0)
-		{
-			vector<int> f = get_vec(a , n/2-1 , n-1);
-			vector<int> s = get_vec(b , 0 , n/2);
-			
-			return get_median(f , s , n/2 + 1);
-	    }
-		else 
-		{
-			vector<int> f = get_vec(a , n/2 , n-1);
-			vector<int> s = get_vec(b , 0 , n/2);
-			
-			return get_median(f , s , n/2+1);
+	for(int j=low ; j<=high-1 ; j++){
+		if(a[j]<pivot){
+			i++ ;
+			swap(a[i] , a[j]);
 		}
 	}
-	
-	else {
-		
-		if(n%2==0)
-		{
-			vector<int> f = get_vec(b , n/2-1 , n-1);
-			vector<int> s = get_vec(a , 0 , n/2);
-			
-			return get_median(f , s , n/2 + 1);
-	    }
-		else 
-		{
-			vector<int> f = get_vec(b , n/2 , n-1);
-			vector<int> s = get_vec(a , 0 , n/2);
-			
-			return get_median(f , s , n/2+1);
-		}
-		
+	swap(a[i+1] ,a[high]);
+	return i+1 ;
+}
+
+void quick_sort(int low , int high){
+	if(low<high){
+		// to implement randomized quick sort 
+		int random = low + rand()%(high-low);
+		swap(a[random] ,a[high]);
+		int pi = partition(low , high);
+		quick_sort(low , pi-1);
+		quick_sort(pi+1 , high);
 	}
-	
-	
 }
 
 void solve()
 {
-	int n; cin>>n ; 
-	vector<int> a(n) , b(n);
-	for(auto &it : a) cin>>it ; 
-	for(auto &it : b) cin>>it ; 
+	srand(time(0)) ;
+ 
+	a = {9 , 8 , 7 , 6 , 5 , 4 , 3 , 2 , 1} ;
 	
-	cout<<get_median(a , b , n) ; 
+	quick_sort(0 ,a.size()-1);
+	
+	debug(a);
+	
+	
 	
 	
 }
