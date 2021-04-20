@@ -34,106 +34,65 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
-
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
-
-void push(Node** head , int x){
-	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
-}
-
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
-	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
-		}
-		j = j->next ;
-	}
-	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
-}
-
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
-	}
-}
-
-
+ll P , T ; 
+const ll MAX = 101 ; 
+const ll p = 31 ; 
+const ll m = 1e9 + 9 ;
 
 void solve()
 {
-	Node* head = nullptr ;
 	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
+	string text , pat ; cin>>text>>pat ; 
+	P = pat.length() , T = text.length();
 	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
+	// precomputing the powers of the base value , which in case is p 
 	
-	//cout<<curr->data ;  
+	vector<ll> p_pow(max(P ,T));
 	
-	q_sort(head , curr);
+	p_pow[0] = 1 ; 
 	
-	print(head);
+	for(int i=1 ; i<(int)p_pow.size() ; i++) p_pow[i] = (p_pow[i-1]*p) % m ;
+	
+	// calculating the has value for the text 
+	
+	vector<ll> hash(T+1 , 0);
+	for(int i=0 ; i<T ; i++){
+		hash[i+1] = (hash[i] + (text[i] - 'a' + 1) * p_pow[i])%m ;
+		
+		// hash is something like 
+		// s[0] + s[0]*p + s[1]*p^2 ....
+	}
+	
+	ll hash_pat = 0 ;
+	for(int i=0 ; i<P ; i++){
+		hash_pat = (hash_pat + (pat[i] - 'a' +1) * p_pow[i])%m ;
+	}
+	
+	vector<int> occurences ; 
+	
+	for(int i=0 ; i+P-1 <T ; i++){
+		ll curr_hash = (hash[i+P] + m - hash[i]) % m ; 
+		if(curr_hash  == hash_pat*p_pow[i]%m) occurences.push_back(i);
+	}
+	
+	//return occurences ; 
+	debug(occurences);
+	
+	
+	
+	
+
+	
+	
+	
 }
 
 int main()
 {
 	speed(); 
-    int T = 1;
+    int Te = 1;
     //cin >> T;
-    while (T--){
+    while (Te--){
     solve();
 }
 }

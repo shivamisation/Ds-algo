@@ -34,98 +34,49 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+vector<int> a ;
 
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
+int partition(int low , int high){
 
-void push(Node** head , int x){
+	int i = low - 1 ; 
+	int pivot = a[high] ;
+	// we cant do this because our implementation of partition is bases on the presense 
+	// of the pivot on the last index .....
 	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
-}
-
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
-	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
+	for(int j=low ; j<=high-1 ; j++){
+		if(a[j]<pivot){
+			i++ ;
+			swap(a[i] , a[j]);
 		}
-		j = j->next ;
 	}
-	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
+	swap(a[i+1] ,a[high]);
+	return i+1 ;
 }
 
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
+void quick_sort(int low , int high){
+	if(low<high){
+		// to implement randomized quick sort 
+		int random = low + rand()%(high-low);
+		swap(a[random] ,a[high]);
+		int pi = partition(low , high);
+		quick_sort(low , pi-1);
+		quick_sort(pi+1 , high);
 	}
 }
-
-
 
 void solve()
 {
-	Node* head = nullptr ;
+	srand(time(0)) ;
+ 
+	a = {9 , 8 , 7 , 6 , 5 , 4 , 3 , 2 , 1} ;
 	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
+	quick_sort(0 ,a.size()-1);
 	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
+	debug(a);
 	
-	//cout<<curr->data ;  
 	
-	q_sort(head , curr);
 	
-	print(head);
+	
 }
 
 int main()

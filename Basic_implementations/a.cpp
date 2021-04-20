@@ -35,97 +35,24 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
-
-void push(Node** head , int x){
-	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
-}
-
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
-	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
-		}
-		j = j->next ;
-	}
-	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
-}
-
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
-	}
-}
-
-
-
 void solve()
 {
-	Node* head = nullptr ;
 	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
+	string s = "This is the first time I am having this so called relation ship with " ;
 	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
+	stringstream st(s);
 	
-	//cout<<curr->data ;  
+	string word ;
+	vector<string> list ;
 	
-	q_sort(head , curr);
+	while(st >> word){
+		list.push_back(word);
+	}
 	
-	print(head);
+	debug(list);
+	
+	
+ 
 }
 
 int main()

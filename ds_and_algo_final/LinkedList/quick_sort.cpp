@@ -42,19 +42,22 @@ class Node{
 };
 
 void push(Node** head , int x){
-	Node* node = new Node() ;
-	node->data = x ;
-	node->next = nullptr ;
 	
-	if(head == nullptr){
-		*head = node ;
+	Node* new_node = new Node ;
+	new_node->data = x ;
+	new_node->next = nullptr ;
+	
+	
+	if(*head == nullptr){
+		*head = new_node ;
 	}
-	else {
-		Node* curr = *head  ;
-		while(curr and curr->next) curr = curr->next ;
-		curr->next = node ;
-		*head = node ;
+	
+	else{
+		Node* curr = *head ; 
+		while(curr and curr->next) curr = curr->next ; 
+		curr->next = new_node ;
 	}
+
 }
 
 void print(Node* head){
@@ -64,25 +67,65 @@ void print(Node* head){
 	}
 }
 
+void swap(Node* &a , Node* &b){
+	int temp = a->data ;
+	a->data = b->data ;
+	b->data = temp ; 
+}
+
+
+Node* part(Node* lo , Node* hi , Node** prev){
+	Node* i = nullptr ;
+	Node* j = lo ;
+	int pivot = hi->data ;
+	
+	while(j!=hi){
+		if(j->data<=pivot){
+			*prev = i ;
+			i = (i==nullptr) ? lo : i->next ;
+			swap(i,j);
+		}
+		j = j->next ;
+	}
+	
+	*prev = i ;
+	i = (i==nullptr)?lo : i->next ;
+	swap(i,j);
+	return i ;
+}
+
+
+void q_sort(Node* lo , Node* hi){
+	if(lo and hi and lo!=hi and hi->next!=lo){
+		Node* prev = nullptr ;
+		Node* pi= part(lo , hi , &prev);
+		q_sort(lo , prev);
+		q_sort(pi , hi);
+	}
+}
+
 
 
 void solve()
 {
 	Node* head = nullptr ;
+	
 	push(&head , 9);
 	push(&head , 8);
-	push(&head , 7);
-	push(&head , 6);
 	push(&head , 5);
-	push(&head , 2);
+	push(&head , 7);
+	push(&head , 3); 
+	push(&head , 9);
 	push(&head , 1);
-	push(&head , 6);
-	push(&head , 2);
+	
+	Node* curr = head ;
+	while(curr and curr->next) curr = curr->next ;
+	
+	//cout<<curr->data ;  
+	
+	q_sort(head , curr);
 	
 	print(head);
-	
-	
-
 }
 
 int main()

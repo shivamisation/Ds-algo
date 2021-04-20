@@ -34,98 +34,33 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+int maxx = 1e3 ;
+vector<vector<int>> dp(maxx , vector<int> (maxx,-1)) ;
 
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
-
-void push(Node** head , int x){
-	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
+int rec(int n , int k){
+	if(k==0 or k==n) return 1 ;
+	else if(dp[n][k]!=-1) return dp[n][k] ;
+	return dp[n][k] = rec(n-1,k-1) + rec(n-1 ,k);
 }
 
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
-	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
+ll iter(int n, int k){
+	vector<ll> c(k+1);
+	c[0] = 1 ;
+	for(int i=1 ; i<=n ; i++){
+		for(int j= min(i,k) ; j>0 ; j--){
+			c[j] = c[j-1] + c[j] ; 
 		}
-		j = j->next ;
 	}
 	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
+	return c[k] ;
 }
-
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
-	}
-}
-
-
 
 void solve()
 {
-	Node* head = nullptr ;
-	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
-	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
-	
-	//cout<<curr->data ;  
-	
-	q_sort(head , curr);
-	
-	print(head);
+ int n , k ; cin>>n>>k ; 
+ 
+ debug(rec(n,k));
+ debug(iter(n,k));	
 }
 
 int main()

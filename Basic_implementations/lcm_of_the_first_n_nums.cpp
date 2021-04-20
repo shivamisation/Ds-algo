@@ -35,97 +35,26 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
-
-void push(Node** head , int x){
-	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
+int gcd(int a , int b){
+	if(b==0) return a; 
+	return gcd(b , a%b);
 }
 
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
+int find_lcm(int a , int b){
 	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
-		}
-		j = j->next ;
-	}
+	if(b==1) return a ; 
 	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
+	a = (a*b)/gcd(a , b);
+	
+	return find_lcm(a , b-1);
 }
-
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
-	}
-}
-
-
 
 void solve()
 {
-	Node* head = nullptr ;
 	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
+	int n ; cin>>n ; 
+	cout<<find_lcm(n , n-1);
 	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
-	
-	//cout<<curr->data ;  
-	
-	q_sort(head , curr);
-	
-	print(head);
 }
 
 int main()

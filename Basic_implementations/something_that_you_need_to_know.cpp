@@ -35,97 +35,85 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
-
-void push(Node** head , int x){
-	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
-}
-
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
-	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
-		}
-		j = j->next ;
-	}
-	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
-}
-
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
-	}
-}
-
-
-
 void solve()
 {
-	Node* head = nullptr ;
 	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
+	//change the upperlowercase of strings 
 	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
+	string name = "shiVam is mY NAME" ; 
+	transform(name.begin() , name.end() , name.begin() , ::tolower);
+	debug(name);
 	
-	//cout<<curr->data ;  
+	//convert integers to string 
 	
-	q_sort(head , curr);
+	int  num = 9890 ; 
+	string temp = to_string(num);
 	
-	print(head);
+	debug(temp);
+	
+	
+	// change strings to numbers 
+	
+	string number = "9988098" ;
+	string hex_num = "FFFFF" ;  
+	
+	int ans1 = stoi(number , nullptr , 10);
+	long int ans2 = stol(number , nullptr , 10);
+	ll ans3 = stoll(number , nullptr , 10);
+	int int_hex_num = stoi(hex_num , nullptr , 16);
+	
+	debug(ans1, ans2 , ans3 , int_hex_num);
+	
+	
+	// tokenise a string with spaces and other characters 
+	
+	string line = "My life has changed because ab mai hari ka hogya " ; 
+	
+	istringstream iss(line);
+	string token ; 
+	
+	unordered_map<string,int> words;
+	
+	while(getline(iss , token , ' ')){
+		words[token]++ ; 
+	}
+	
+	
+	debug(words);
+	
+	/// taking input of a line which has words 
+	
+	string str ; 
+	
+	puts("Now you have to inter some words which need to have spacebars in them\n") ;
+	
+	getline(cin , str);
+	
+	cout<<"Hari Bol "<<str ; 
+	
+	
+	//puts("\n Now I will demonstrate you how to take input of arrays of unkown size \n");
+	
+	
+	//vector<int> vec ; 
+	
+	//int val ; 
+	//while(cin >> val){
+		//if(val==0) break ; 
+		//vec.push_back(val);
+	//}
+	
+	//debug(val);
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
 }
 
 int main()

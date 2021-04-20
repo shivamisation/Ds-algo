@@ -33,99 +33,46 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define inf          INT_MAX
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
+const int mod = 1e7 + 9 ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+const ll N = 1e4 ; 
+vector<ll> is_prime(N ,1) ;
 
-class Node{
-	public :
-	int data ; 
-	Node* next ; 
-};
-
-void push(Node** head , int x){
+void seive(){
+	for(ll i = 4 ; i<N ; i+=2) is_prime[i] = 0 ; 
+	is_prime[1] = 0 ; 
 	
-	Node* new_node = new Node ;
-	new_node->data = x ;
-	new_node->next = nullptr ;
-	
-	
-	if(*head == nullptr){
-		*head = new_node ;
-	}
-	
-	else{
-		Node* curr = *head ; 
-		while(curr and curr->next) curr = curr->next ; 
-		curr->next = new_node ;
-	}
-
-}
-
-void print(Node* head){
-	while(head){
-		cout<<head->data<<"\n" ;
-		head = head->next ;
-	}
-}
-
-void swap(Node* &a , Node* &b){
-	int temp = a->data ;
-	a->data = b->data ;
-	b->data = temp ; 
-}
-
-
-Node* part(Node* lo , Node* hi , Node** prev){
-	Node* i = nullptr ;
-	Node* j = lo ;
-	int pivot = hi->data ;
-	
-	while(j!=hi){
-		if(j->data<=pivot){
-			*prev = i ;
-			i = (i==nullptr) ? lo : i->next ;
-			swap(i,j);
+	for(ll i=3 ; i*i < N ; i++){
+		if(is_prime[i]){
+			for(ll j = i*i ; j<N ; j+=i){
+				is_prime[j] = false ; 
+			}
 		}
-		j = j->next ;
-	}
-	
-	*prev = i ;
-	i = (i==nullptr)?lo : i->next ;
-	swap(i,j);
-	return i ;
-}
-
-
-void q_sort(Node* lo , Node* hi){
-	if(lo and hi and lo!=hi and hi->next!=lo){
-		Node* prev = nullptr ;
-		Node* pi= part(lo , hi , &prev);
-		q_sort(lo , prev);
-		q_sort(pi , hi);
 	}
 }
-
 
 
 void solve()
 {
-	Node* head = nullptr ;
+	seive(); 
 	
-	push(&head , 9);
-	push(&head , 8);
-	push(&head , 5);
-	push(&head , 7);
-	push(&head , 3); 
-	push(&head , 9);
-	push(&head , 1);
+	vector<ll> primes ; 
+	for(int i=1 ; i<N ; i++) if(is_prime[i]) primes.push_back(i);
 	
-	Node* curr = head ;
-	while(curr and curr->next) curr = curr->next ;
+	int n ; cin>> n ; 
+	ll lcm = 1; 
 	
-	//cout<<curr->data ;  
+	//debug(primes);
 	
-	q_sort(head , curr);
+	for(int i=0 ; i<(int)primes.size() and primes[i]<=n ; i++){
+		int val = primes[i] ; 
+		while(val*primes[i] <= n) val*=primes[i] ;
+		
+		lcm*=val ;
+		lcm%=mod ; 
+	}
 	
-	print(head);
+	debug(lcm);
 }
 
 int main()
