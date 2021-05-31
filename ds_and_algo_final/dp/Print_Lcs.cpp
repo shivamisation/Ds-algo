@@ -34,84 +34,63 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+int dp[100][100] ;
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
+// in order for the space optimised approach we can use the % approach , just replace 
+// every i or any bracket of i with ()%2
+
+int lcs(string a, string b,int n, int m){
+	
+	for(int i=1 ; i<=n ; i++){
+		for(int j=1 ; j<=m ; j++){
+			if(a[i-1] == b[j-1]) dp[i][j] = 1 + (dp[i-1][j-1]);
+			else dp[i][j] = max(dp[i-1][j] , dp[i][j-1]);
+		}
 	}
 	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
-	
-	return false ;
+	return dp[n][m] ;
+
 }
-
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
+	string a = "hala" , b = "hlal" ; 
+	cout<<lcs(a,b,a.size() , b.size());
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	string s = "" ;
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
+	int i = a.size() , j = b.size() ;
+	
+	while(i>0 and j>0){
+		if(a[i-1]==b[j-1]){
+			s+=a[i-1] ;
+			i-- , j-- ; 
 		}
+		
+		else if(dp[i-1][j] > dp[i][j-1]) i-- ;
+		else j-- ;
 	}
 	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
+	nl;
 	
-	mp.clear();
 	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
+	reverse(s.begin() , s.end());
+	 
+	cout<<s ;
 	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
 	
 
 	
 	
-	
-
+ 
+ 
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

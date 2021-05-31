@@ -34,84 +34,36 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+vector<int> a ;
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
-	}
+int subset_sum(int n , int sum){
 	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
+	if(sum==0) return true ;
+	if(n==0) return false ;
 	
-	return false ;
+	if(a[n-1] > sum) return subset_sum(n-1 , sum);
+	
+	return subset_sum(n-1 , sum) || subset_sum(n-1 , sum-a[n-1]);
 }
-
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	a = {3 , 34 , 4 , 12 , 5 , 2 } ;
+	int sum = 9 ;
+	int n = a.size();
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
-	}
-	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
-	
-	mp.clear();
-	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
-	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
-	
+	debug(subset_sum(n,sum));
 
-	
-	
-	
-
+ 
+ 
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

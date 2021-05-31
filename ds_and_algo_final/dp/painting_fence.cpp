@@ -35,83 +35,39 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
-	}
-	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
-	
-	return false ;
-}
+// paint the fence such that not more than two fences are of the same colour 
 
+int paint(int n , int k){
+	if(n==0) return 0 ;
+	if(n==1) return k ;
+	
+	int same = k ;
+	int diff = k*(k-1) ;
+	
+	for(int i=3 ; i<=n ; i++){
+		int temp = diff ;
+		diff = (same + diff)*(k-1) ;
+		same = temp ;	
+	}
+	
+	return same + diff ;
+}
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
+	int n = 3 , k = 2 ; 
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	debug(paint(n,k));
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
-	}
-	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
-	
-	mp.clear();
-	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
-	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
-	
-
-	
-	
-	
-
+ 
+ 
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

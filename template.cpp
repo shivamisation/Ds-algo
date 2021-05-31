@@ -35,8 +35,12 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
+
 void solve()
 {
+	
+
+	
 	
 	
 }

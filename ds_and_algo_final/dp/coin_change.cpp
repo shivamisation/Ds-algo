@@ -34,84 +34,35 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+vector<int> coins ;
+int n ;
+int dp[100][100] ;
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
-	}
+int coin(int ind , int val){
+	if(dp[ind][val]!=-1) return dp[ind][val] ;
+	if(val == 0) return 1 ;
+	if(val < 0) return 0 ;
+	if(ind >= n and val>0) return 0 ;
 	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
-	
-	return false ;
+	return coin(ind+1 , val) + coin(ind , val-coins[ind]);
 }
-
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
+	memset(dp , -1 , sizeof dp);
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	coins = {1 , 2 , 3 , 6} ;
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
-	}
+	n = coins.size();
 	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
-	
-	mp.clear();
-	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
-	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
-	
-
-	
-	
-	
-
+	debug(coin(0,10));
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

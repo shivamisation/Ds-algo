@@ -35,83 +35,56 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
-	}
-	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
-	
-	return false ;
-}
+vector<vector<int>> a ;
+vector<vector<int>> t ;
+vector<int> e;
+vector<int> x ;
+int n ;
+int dp[100][2] ;
 
+int rec(int ind , int l){
+	
+	if(dp[ind][l]!=-1) return dp[ind][l] ;
+	
+	if(ind == 0){
+	 	 return dp[ind][l] = e[l] + a[l][0] ;
+	}
+	
+	return dp[ind][l] = min(rec(ind-1,l) + a[l][ind] , rec(ind-1,l^1) + a[l][ind] + t[l^1][ind]);
+}
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
+	memset(dp , -1 , sizeof dp);
+	a = {{4,5,3,2},
+		 {2,10,1,4}} ;
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	t = {{0,7,4,5},
+		 {0,9,2,8}} ;
+		 
+	e = {10,12} ;
+	x = {18,7} ;
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
-	}
+	n = a[0].size();
 	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
+	debug(min(rec(n-1,1) + x[1] , rec(n-1,0) + x[0]));
 	
-	mp.clear();
 	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
 	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
 	
 
 	
 	
 	
-
+ 
+ 
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

@@ -34,84 +34,80 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+string s ;
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
+int dp[1001][1001][2] ;
+
+int parenthise(int i , int j , int isTrue){
+	
+	if(dp[i][j][isTrue]!=-1) return dp[i][j][isTrue] ;
+	
+	if(i>j) return false ;
+	
+	if(i==j){
+		if(isTrue){
+			return s[i] == 'T' ;
+		}
+		else return s[i] == 'F' ;
 	}
 	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
+	int ans = 0 ;
+	
+	for(int k = i+1 ; k<j ; k+=2){
 		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
+		/*
+		 * the following lines of codes can be optimised , by first cheking the dp table
+		 * then calling them ... for leftT , rightT ... and so on , this would increase 
+		 * the efficiency of the code . 
+		 * 
+		 * */
+		
+		int leftT = parenthise(i , k-1 , 1);
+		int rightT = parenthise(k+1 , j , 1);
+		int leftF = parenthise(i,k-1 , 0);
+		int rightF = parenthise(k+1 , j , 0);
+		
+		
+		if(s[k] == '&'){
+			if(isTrue){
+				ans += leftT*rightT ;
+			}
+			else ans+= leftT*rightF + leftF*rightT + leftF*rightF ;
+		}
+		
+		else if(s[k] == '|'){
+			if(isTrue){
+				ans+= leftT*rightT + rightF*leftT + rightT*leftF ;
+			}
+			else ans+= leftF*rightF ;
+		}
+		
+		else if(s[k]== '^'){
+			if(isTrue){
+				ans+= leftT*rightF + leftF*rightT ;
+			}
+			else ans+= leftT*rightT + leftF*rightF ;
+		}
 	}
 	
-	return false ;
+	return dp[i][j][isTrue] = ans ; 
 }
 
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	memset(dp , -1 , sizeof dp);
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
-	}
-	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
-	
-	mp.clear();
-	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
-	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
-	
-
-	
-	
-	
-
+	s = "T|T&F^T" ;
+	cout<<parenthise(0 , s.length()-1 , 1);
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

@@ -35,83 +35,48 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
-	}
+int lis(vector<int> a){
 	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
+	int n = a.size();
 	
-	return false ;
-}
-
-
-void solve()
-{
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
+	vector<int> dp(n+1 , inf);
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	dp[0] = zer ;
 	
 	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
+		int id = upper_bound(dp.begin() , dp.end() , a[i]) - dp.begin();
+		if(a[i]>dp[id-1] and a[i]<dp[id]) dp[id] = a[i] ;
 	}
 	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
+	int ans = 0 ;
+	for(int i=n ; i>=0 ; i--){
+		if(dp[i]!=inf) {
+			ans = i ;
 			break ;
 		}
 	}
 	
-	mp.clear();
+	debug(dp);
 	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
+	return ans ;
 	
-	ll lo = 1 , hi = m ;
 	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
-	
+}
 
+void solve()
+{
+	vector<int> a =  { 10, 22, 9, 33, 21, 50, 41, 60 } ;
+	cout<<lis(a);
 	
-	
-	
-
+ 
+ 
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }

@@ -34,84 +34,55 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
+string s ;
+int dp[100][100] ;
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
+bool is_palindrome(int i , int j){
+	while(i<j){
+		if(s[i]!=s[j]) return false ;
+		i++ , j-- ;
 	}
 	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
-	
-	return false ;
+	return true ;
 }
 
+int palindrome_part(int i, int j){
+	
+	if(dp[i][j]!=-1) return dp[i][j] ;
+	
+	if(i>=j) return 0 ;
+	
+	if(is_palindrome(i,j)) return 0 ;
+	
+	int val = inf ;
+	
+	for(int k=i ; k<j ; k++){
+		int left , right ;
+		
+		if(dp[i][k]!=-1) left = dp[i][k] ;
+		else left = palindrome_part(i,k);
+		
+		if(dp[k+1][j]!=-1) right = dp[k+1][j] ;
+		else right = palindrome_part(k+1 , j);
+		
+		val = min(val , 1 + left + right );
+	}
+	
+	return dp[i][j] =val ;
+}
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
-	
-	map<ll,ll> mp ;
-	ll ans = inf ;
-	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
-	}
-	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
-		}
-	}
-	
-	mp.clear();
-	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
-	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
-	
-
-	
-	
-	
-
+	 memset(dp , -1 , sizeof dp);
+	 cin>>s ;
+	 debug(palindrome_part(0 , s.length() - 1 ));
 }
 
 int main()
 {
 	speed(); 
     int T = 1;
-    cin >> T;
+    //cin >> T;
     while (T--){
     solve();
 }
