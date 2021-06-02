@@ -35,76 +35,58 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define nl cout<<'\n' ; 
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
-bool check(vector<ll> a , ll k , ll n){
-	map<ll,ll> mp ;
-	ll m = a.size();
-	for(int i=0 ; i<k ; i++) {
-		mp[a[i]]++ ;
-	}
-	if(mp.size() == n){
-		return true; 
-	}
-	
-	for(int i=k ; i<a.size() ; i++){
-		mp[a[i]]++ ;
-		if(mp[a[i-k]] == 1) mp.erase(a[i-k]);
-		else mp[a[i-k]] -- ; 
-		
-		if(mp.size() == n and (i>=m and i-k<=m-1)) return true ;
-	}
-	
-	return false ;
-}
-
 
 void solve()
 {
-	ll m , n; cin>>n>>m ;
-	vector<ll> a(2*m);
-	for(int i=0 ; i<m ; i++) cin>>a[i] ;
+	int n;  cin>>n ;
+	string a , b ; cin>>a>>b ;
+	vector<int> pre0(n) , pre1(n);
 	
-	map<ll,ll> mp ;
-	ll ans = inf ;
+	pre0[0] = a[0] == '0' ;
+	pre1[0] = a[0] == '1' ;
 	
-	for(int i=0 ; i<n ; i++){
-		mp[a[i]]++ ;
-		if(mp.size() == n){
-			ans = min(ans , 1ll*(i+1));
-			break; 
-		}
+	for(int i=1 ; i<n ; i++){
+		pre0[i] = pre0[i-1] ;
+		pre1[i] = pre1[i-1] ;
+		
+		if(a[i] == '0') pre0[i]++ ;
+		else pre1[i]++ ;
 	}
 	
-	mp.clear();
-	for(int j=m-1 ; j>=0 ; j--){
-		mp[a[j]]++ ;
-		if(mp.size()==n){
-			ans = min(ans , m-j);
-			break ;
+	debug(pre0);
+	
+	int parity = 0 ;
+	
+	int j = n-1 ;
+	
+	while(j>=0){
+		if(!parity){
+			if(a[j]!=b[j]){
+				if(pre0[j]!=pre1[j]){
+					cout<<"NO\n" ;
+					return ;
+				}
+				parity^=1 ;
+			}
 		}
+		else {
+			if(a[j]==b[j]){
+				if(pre0[j]!=pre1[j]){
+					cout<<"NO\n" ;
+					return ;
+				}
+				parity^=1 ;
+			}	
+		}
+		j-- ;
 	}
 	
-	mp.clear();
-	
-	for(int i=m ; i<2*m ; i++) a[i] = a[i-m] ;
-	
-	ll lo = 1 , hi = m ;
-	
-	while(lo<=hi){
-		ll mid = (lo+hi)/2; 
-		if(check(a , mid , n)){
-			ans = min(ans , mid);
-			hi = mid -1 ;
-		}
-		else lo = mid+1 ;
-	}
-	
-	cout<<ans<<"\n" ;
+	cout<<"YES\n" ;
 	
 
 	
 	
 	
-
 }
 
 int main()
