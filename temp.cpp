@@ -33,13 +33,13 @@ void _print(T t, V... v) {__print(t); if (sizeof...(v)) cerr << ", "; _print(v..
 #define inf          INT_MAX
 #define zer          INT_MIN
 #define nl cout<<'\n' ; 
-#define prec(n) fixed<<setprecision(n)
-
 void speed() { ios_base::sync_with_stdio(false);cin.tie(NULL);}
 
 
 void solve()
 {
+	
+	cout<<(1<<4)<<"\n";
 	
 
 	
